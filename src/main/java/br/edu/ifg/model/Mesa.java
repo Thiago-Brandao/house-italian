@@ -1,39 +1,40 @@
 package br.edu.ifg.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
-
 @Entity
 @Table(name = "tb_mesa")
 public class Mesa {
 
-    @Column(nullable = false, unique = true)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false,unique = true,length = 30)
+    @Column(nullable = false, unique = true)
     private Integer numero;
 
-    @Column(nullable = false,length = 6)
+    @Column(nullable = false)
     private Integer capacidade;
 
-    @Column(nullable = false,length = 30)
+    @Column(nullable = false, length = 100)
     private String localizacao;
 
     @Column(nullable = false)
-    private Boolean ativa;
+    private Boolean ativa = true;
 
-        @Column(nullable = true)
+    @Column(length = 255)
     private String descricao;
 
+    @PrePersist
+    public void prePersist() {
+        if (this.ativa == null) this.ativa = true;
+    }
 }
