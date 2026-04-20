@@ -5,7 +5,6 @@ import br.edu.ifg.bo.UsuarioBO;
 import br.edu.ifg.dto.ReservaRequestDTO;
 import br.edu.ifg.dto.ReservaResponseDTO;
 import br.edu.ifg.model.Reserva;
-import br.edu.ifg.model.StatusReserva;
 import br.edu.ifg.model.Usuario;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
@@ -29,62 +28,15 @@ public class ReservaResource {
     @Inject
     JsonWebToken jwt;
 
-    // GET /api/reservas — ADMIN vê todas, CLIENTE só as próprias
-    @GET
-    @RolesAllowed({"ADMIN", "CLIENTE"})
-    public Response listar() {
-        String email = jwt.getSubject();
-        Usuario usuario = usuarioBO.buscarPorEmail(email);
-        
-        List<ReservaResponseDTO> lista;
-        if (jwt.getGroups().contains("ADMIN")) {
-            lista = reservaBO.listarTodas()
-                    .stream()
-                    .map(ReservaResponseDTO::de)
-                    .toList();
-        } else {
-            lista = reservaBO.listarPorUsuario(usuario.getId())
-                    .stream()
-                    .map(ReservaResponseDTO::de)
-                    .toList();
-        }
-
-        return Response.ok(lista).build();
-    }
-
-    // GET /api/reservas/{id}
-    @GET
-    @Path("/{id}")
-    @RolesAllowed({"ADMIN", "CLIENTE"})
-    public Response buscarPorId(@PathParam("id") Long id) {
-        try {
-            Reserva reserva = reservaBO.buscarPorId(id);
-            // Verifica se o cliente está tentando ver a reserva de outro
-            if (!jwt.getGroups().contains("ADMIN")) {
-                String email = jwt.getSubject();
-                Usuario usuario = usuarioBO.buscarPorEmail(email);
-                if (!reserva.getUsuario().getId().equals(usuario.getId())) {
-                    return Response.status(Response.Status.FORBIDDEN)
-                            .entity(new MensagemErro("Você não tem permissão para visualizar esta reserva."))
-                            .build();
-                }
-            }
-            return Response.ok(ReservaResponseDTO.de(reserva)).build();
-        } catch (IllegalArgumentException e) {
-            return Response.status(Response.Status.NOT_FOUND)
-                    .entity(new MensagemErro(e.getMessage()))
-                    .build();
-        }
-    }
-
-    // POST /api/reservas — UC-03
+    // POST /api/reservas — UC-01 (CLIENTE)
     @POST
-    @RolesAllowed({"ADMIN", "CLIENTE"})
+    @RolesAllowed({"CLIENTE", "ADMIN"})
     public Response criar(ReservaRequestDTO dto) {
         try {
+            // Pega o ID do usuário logado pelo token JWT
             String email = jwt.getSubject();
             Usuario usuario = usuarioBO.buscarPorEmail(email);
-            
+
             Reserva reserva = reservaBO.criar(
                     usuario.getId(),
                     dto.mesaId(),
@@ -103,17 +55,59 @@ public class ReservaResource {
         }
     }
 
-    // PUT /api/reservas/{id}/cancelar — UC-03
+    // GET /api/reservas/minhas — UC-01 (CLIENTE vê só as suas)
+    @GET
+    @Path("/minhas")
+    @RolesAllowed({"CLIENTE", "ADMIN"})
+    public Response minhas() {
+        String email = jwt.getSubject();
+        Usuario usuario = usuarioBO.buscarPorEmail(email);
+
+        List<ReservaResponseDTO> lista = reservaBO
+                .listarMinhas(usuario.getId())
+                .stream()
+                .map(ReservaResponseDTO::de)
+                .toList();
+
+        return Response.ok(lista).build();
+    }
+
+    // GET /api/reservas — lista todas (ADMIN)
+    @GET
+    @RolesAllowed("ADMIN")
+    public Response listarTodas() {
+        List<ReservaResponseDTO> lista = reservaBO.listarTodas()
+                .stream()
+                .map(ReservaResponseDTO::de)
+                .toList();
+        return Response.ok(lista).build();
+    }
+
+    // GET /api/reservas/{id}
+    @GET
+    @Path("/{id}")
+    @RolesAllowed({"CLIENTE", "ADMIN"})
+    public Response buscarPorId(@PathParam("id") Long id) {
+        try {
+            Reserva reserva = reservaBO.buscarPorId(id);
+            return Response.ok(ReservaResponseDTO.de(reserva)).build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity(new MensagemErro(e.getMessage()))
+                    .build();
+        }
+    }
+
+    // PUT /api/reservas/{id}/cancelar — UC-01 (CLIENTE)
     @PUT
     @Path("/{id}/cancelar")
-    @RolesAllowed({"ADMIN", "CLIENTE"})
+    @RolesAllowed({"CLIENTE", "ADMIN"})
     public Response cancelar(@PathParam("id") Long id) {
         try {
             String email = jwt.getSubject();
             Usuario usuario = usuarioBO.buscarPorEmail(email);
-            boolean isAdmin = jwt.getGroups().contains("ADMIN");
-            
-            Reserva reserva = reservaBO.cancelar(id, usuario.getId(), isAdmin);
+
+            Reserva reserva = reservaBO.cancelar(id, usuario.getId());
             return Response.ok(ReservaResponseDTO.de(reserva)).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST)
@@ -122,15 +116,28 @@ public class ReservaResource {
         }
     }
 
-    // PUT /api/reservas/{id}/status — só ADMIN
+    // PUT /api/reservas/{id}/confirmar — ADMIN
     @PUT
-    @Path("/{id}/status")
+    @Path("/{id}/confirmar")
     @RolesAllowed("ADMIN")
-    public Response alterarStatus(
-            @PathParam("id") Long id,
-            @QueryParam("status") StatusReserva status) {
+    public Response confirmar(@PathParam("id") Long id) {
         try {
-            Reserva reserva = reservaBO.alterarStatus(id, status);
+            Reserva reserva = reservaBO.confirmar(id);
+            return Response.ok(ReservaResponseDTO.de(reserva)).build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(new MensagemErro(e.getMessage()))
+                    .build();
+        }
+    }
+
+    // PUT /api/reservas/{id}/concluir — ADMIN
+    @PUT
+    @Path("/{id}/concluir")
+    @RolesAllowed("ADMIN")
+    public Response concluir(@PathParam("id") Long id) {
+        try {
+            Reserva reserva = reservaBO.concluir(id);
             return Response.ok(ReservaResponseDTO.de(reserva)).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST)

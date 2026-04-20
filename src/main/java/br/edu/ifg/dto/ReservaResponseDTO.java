@@ -6,8 +6,11 @@ import java.time.LocalDateTime;
 
 public record ReservaResponseDTO(
         Long id,
-        UsuarioResponseDTO usuario,
-        MesaResponseDTO mesa,
+        Long mesaId,
+        Integer mesaNumero,
+        String mesaLocalizacao,
+        Long usuarioId,
+        String usuarioNome,
         LocalDateTime dataHoraInicio,
         LocalDateTime dataHoraFim,
         Integer numeroPessoas,
@@ -18,8 +21,11 @@ public record ReservaResponseDTO(
     public static ReservaResponseDTO de(Reserva r) {
         return new ReservaResponseDTO(
                 r.getId(),
-                UsuarioResponseDTO.de(r.getUsuario()),
-                MesaResponseDTO.de(r.getMesa()),
+                r.getMesa().getId(),
+                r.getMesa().getNumero(),
+                r.getMesa().getLocalizacao(),
+                r.getUsuario().getId(),
+                r.getUsuario().getNome(),
                 r.getDataHoraInicio(),
                 r.getDataHoraFim(),
                 r.getNumeroPessoas(),
