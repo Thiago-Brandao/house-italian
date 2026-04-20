@@ -8,6 +8,9 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+// Importa no topo do arquivo
+import br.edu.ifg.bo.MesaBO;
+import br.edu.ifg.dao.MesaDAO;
 
 @ApplicationScoped
 public class StartupData {
@@ -17,6 +20,13 @@ public class StartupData {
 
     @Inject
     UsuarioBO usuarioBO;
+
+    // Injeta no corpo da classe
+    @Inject
+    MesaBO mesaBO;
+
+    @Inject
+    MesaDAO mesaDAO;
 
     @Transactional
     public void onStart(@Observes StartupEvent event) {
@@ -41,6 +51,15 @@ public class StartupData {
                 Role.CLIENTE
             );
             System.out.println(">>> Cliente criado: thiago@email.com / senha123");
+        }
+
+            // Mesas
+        if (!mesaDAO.existeMesaNumero(1)) {
+            mesaBO.criar(1, 4, "Salao Principal", "Mesa proxima a janela");
+            mesaBO.criar(2, 6, "Varanda", "Mesa ao ar livre");
+            mesaBO.criar(3, 2, "VIP", "Mesa para ocasioes especiais");
+            System.out.println(">>> Mesas criadas!");
+        
         }
     }
 }
