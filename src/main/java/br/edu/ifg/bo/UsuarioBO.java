@@ -70,6 +70,12 @@ public class UsuarioBO {
         return usuario;
     }
 
+    // Busca usuário pelo email (usado no /me)
+    public Usuario buscarPorEmail(String email) {
+        return usuarioDAO.buscarPorEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado."));
+    }
+
     // Método privado que simula o hash da senha
     // (vamos melhorar isso quando implementarmos o JWT)
     private String hashSenha(String senha) {
