@@ -3,6 +3,7 @@ package br.edu.ifg.bo;
 import br.edu.ifg.dao.UsuarioDAO;
 import br.edu.ifg.model.Role;
 import br.edu.ifg.model.Usuario;
+import br.edu.ifg.util.AcoesLog;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -13,6 +14,10 @@ public class UsuarioBO {
 
     @Inject // injeta a instância criada em UsuarioDAO
     UsuarioDAO usuarioDAO;
+
+    // Adiciona o inject no topo da classe
+    @Inject
+    AuditoriaBO auditoriaBO;
 
     // Cadastra um novo usuário (chamado pelo endpoint de cadastro)
     @Transactional // Garante que o tudo no método aconteça em uma unica transação
@@ -45,6 +50,16 @@ public class UsuarioBO {
         usuario.setAtivo(true);
 
         usuarioDAO.persist(usuario);
+
+        // No final do método cadastrar(), antes do return:
+        auditoriaBO.registrar(
+        AcoesLog.CADASTRO_USUARIO,
+        "Usuario",
+        usuario.getId(),
+        usuario,
+         "Email: " + usuario.getEmail()
+        );
+
         return usuario;
     }
 

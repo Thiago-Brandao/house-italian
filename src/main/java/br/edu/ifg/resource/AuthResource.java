@@ -1,10 +1,12 @@
 package br.edu.ifg.resource;
 
+import br.edu.ifg.bo.AuditoriaBO;
 import br.edu.ifg.dao.UsuarioDAO;
 import br.edu.ifg.dto.LoginRequestDTO;
 import br.edu.ifg.dto.LoginResponseDTO;
 import br.edu.ifg.model.Usuario;
 import br.edu.ifg.security.JwtService;
+import br.edu.ifg.util.AcoesLog;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
@@ -16,6 +18,9 @@ import java.util.Optional;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class AuthResource {
+
+    @Inject
+    AuditoriaBO auditoriaBO;
 
     @Inject
     UsuarioDAO usuarioDAO;
@@ -56,6 +61,14 @@ public class AuthResource {
         // Gera o token JWT
         String token = jwtService.gerarToken(usuario);
 
+        auditoriaBO.registrar(
+        AcoesLog.LOGIN,
+        "Usuario",
+        usuario.getId(),
+        usuario,
+        "Login realizado"
+        );
+
         return Response.ok(new LoginResponseDTO(
                 token,
                 "Bearer",
@@ -63,6 +76,7 @@ public class AuthResource {
                 usuario.getEmail(),
                 usuario.getPerfil()
         )).build();
+
     }
 
     public record MensagemErro(String erro) {}

@@ -2,6 +2,7 @@ package br.edu.ifg.bo;
 
 import br.edu.ifg.dao.MesaDAO;
 import br.edu.ifg.model.Mesa;
+import br.edu.ifg.util.AcoesLog;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -9,6 +10,9 @@ import java.util.List;
 
 @ApplicationScoped
 public class MesaBO {
+
+    @Inject
+    AuditoriaBO auditoriaBO;
 
     @Inject
     MesaDAO mesaDAO;
@@ -63,6 +67,14 @@ public class MesaBO {
         mesa.setAtiva(true);
 
         mesaDAO.persist(mesa);
+
+        auditoriaBO.registrar(
+        AcoesLog.CRIAR_MESA,
+        "Mesa",
+        mesa.getId(),
+         null,
+        "Mesa numero: " + mesa.getNumero()
+);
         return mesa;
     }
 
@@ -94,6 +106,14 @@ public class MesaBO {
         mesa.setCapacidade(capacidade);
         mesa.setLocalizacao(localizacao.trim());
         mesa.setDescricao(descricao);
+
+        auditoriaBO.registrar(
+        AcoesLog.CRIAR_MESA,
+        "Mesa",
+        mesa.getId(),
+        null,
+        "Mesa numero: " + mesa.getNumero()
+);
 
         return mesa;
     }

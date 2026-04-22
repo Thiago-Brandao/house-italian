@@ -4,6 +4,7 @@ import br.edu.ifg.dao.MesaDAO;
 import br.edu.ifg.dao.ReservaDAO;
 import br.edu.ifg.dao.UsuarioDAO;
 import br.edu.ifg.model.*;
+import br.edu.ifg.util.AcoesLog;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -13,6 +14,9 @@ import java.util.List;
 
 @ApplicationScoped
 public class ReservaBO {
+
+    @Inject
+    AuditoriaBO auditoriaBO;
 
     @Inject
     ReservaDAO reservaDAO;
@@ -107,6 +111,15 @@ public class ReservaBO {
         reserva.setStatus(StatusReserva.PENDENTE);
 
         reservaDAO.persist(reserva);
+
+        auditoriaBO.registrar(
+        AcoesLog.CRIAR_RESERVA,
+        "Reserva",
+        reserva.getId(),
+        usuario,
+        "Mesa: " + mesa.getNumero() + " | Inicio: " + inicio
+        );
+
         return reserva;
     }
 
@@ -157,6 +170,15 @@ public class ReservaBO {
         }
 
         reserva.setStatus(StatusReserva.CANCELADA);
+
+        auditoriaBO.registrar(
+        AcoesLog.CANCELAR_RESERVA,
+        "Reserva",
+        reserva.getId(),
+        reserva.getUsuario(),
+        "Reserva cancelada"
+        );
+
         return reserva;
     }
 

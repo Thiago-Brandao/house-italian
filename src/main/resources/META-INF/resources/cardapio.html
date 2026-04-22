@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Italian — Cardápio</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="index.html" class="navbar-brand">House-Italian</a>
+    <div class="navbar-links">
+        <a href="index.html">Home</a>
+        <a href="#" onclick="irParaReserva()">Reserva</a>
+        <a href="#" class="btn-entrar" id="btn-entrar-nav"
+           onclick="window.location.href='index.html'">Entrar</a>
+        <span id="nav-usuario" class="hidden">
+            <a href="#" onclick="irParaDashboard()" id="nav-nome"></a>
+            &nbsp;|&nbsp;
+            <a href="#" onclick="logout()">Sair</a>
+        </span>
+    </div>
+</nav>
+
+<div class="cardapio-bg">
+    <div class="cardapio-container">
+        <table class="cardapio-table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+            <tbody id="cardapio-body">
+                <tr>
+                    <td colspan="3" class="text-center">Carregando...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="page-footer">
+        Rua 7 Setor Comercial - Luziânia, GO &nbsp;·&nbsp; (55) 5555-5555
+    </div>
+</div>
+
+<script>
+    const API = 'http://localhost:8080';
+
+    function getToken()  { return sessionStorage.getItem('token'); }
+    function getPerfil() { return sessionStorage.getItem('perfil'); }
+    function getNome()   { return sessionStorage.getItem('nome'); }
+
+    function logout() {
+        sessionStorage.clear();
+        window.location.href = 'index.html';
+    }
+
+    function irParaDashboard() {
+        window.location.href = getPerfil() === 'ADMIN'
+            ? 'admin/dashboard.html' : 'reserva.html';
+    }
+
+    function irParaReserva() {
+        if (!getToken()) {
+            sessionStorage.setItem('redirect', 'reserva.html');
+            window.location.href = 'index.html';
+        } else {
+            window.location.href = 'reserva.html';
+        }
+    }
+
+    function atualizarNavbar() {
+        const logado = !!getToken();
+        document.getElementById('btn-entrar-nav')
+            .classList.toggle('hidden', logado);
+        document.getElementById('nav-usuario')
+            .classList.toggle('hidden', !logado);
+        if (logado) {
+            document.getElementById('nav-nome').textContent = getNome();
+        }
+    }
+
+    async function carregarCardapio() {
+        try {
+            const res = await fetch(`${API}/api/cardapio`);
+            const pratos = await res.json();
+            const tbody = document.getElementById('cardapio-body');
+
+            if (pratos.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="3">Nenhum prato disponível.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = pratos.map(p => `
+                <tr>
+                    <td>${p.nome}</td>
+                    <td>${p.descricao}</td>
+                    <td>R$ ${p.preco.toFixed(2).replace('.', ',')}</td>
+                </tr>
+            `).join('');
+
+        } catch (e) {
+            document.getElementById('cardapio-body').innerHTML =
+                '<tr><td colspan="3">Erro ao carregar cardápio.</td></tr>';
+        }
+    }
+
+    atualizarNavbar();
+    carregarCardapio();
+</script>
+</body>
+</html>
