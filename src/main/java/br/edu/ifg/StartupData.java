@@ -1,7 +1,7 @@
 package br.edu.ifg;
 
-import br.edu.ifg.bo.UsuarioBO;
-import br.edu.ifg.dao.UsuarioDAO;
+import br.edu.ifg.model.bo.UsuarioBO;
+import br.edu.ifg.model.dao.UsuarioDAO;
 import br.edu.ifg.model.Prato;
 import br.edu.ifg.model.Role;
 import io.quarkus.runtime.StartupEvent;
@@ -10,9 +10,9 @@ import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 // Importa no topo do arquivo
-import br.edu.ifg.bo.MesaBO;
-import br.edu.ifg.dao.MesaDAO;
-import br.edu.ifg.dao.PratoDAO;
+import br.edu.ifg.model.bo.MesaBO;
+import br.edu.ifg.model.dao.MesaDAO;
+import br.edu.ifg.model.dao.PratoDAO;
 
 @ApplicationScoped
 public class StartupData {
@@ -67,7 +67,7 @@ public class StartupData {
         
         }
 
-        // Pratos — adiciona no onStart após as mesas
+        // Pratos
         if (pratoDAO.count() == 0) {
             criarPrato("Lasagna alla Bolognese",
                 "Camadas de massa fresca intercaladas com rico molho de carne (ragu), molho cremoso e queijo parmesão gratinado.",
@@ -84,7 +84,7 @@ public class StartupData {
             System.out.println(">>> Pratos criados!");
         }
     }
-            // Método auxiliar — adiciona no final da classe
+            // Método auxiliar
             private void criarPrato(String nome, String descricao, Double preco) {
             Prato p = new Prato();
             p.setNome(nome);

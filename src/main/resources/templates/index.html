@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/css/style.css">
+        <title>House Italian</title>
+    </head>
+
+    <body>
+
+    <header>
+        <div class="header-container">
+            <div class="item1-content">
+            <p>House-Italian</p>
+            </div>
+            <div class="item2-content">
+                <a href="#" onclick="irParaReserva()" style="text-decoration: none; color:white;">
+                    <p>Reserva</p>
+                </a>
+            </div>
+            <div class="item3-content">
+                <a href="/cardapio" style="text-decoration: none; color:white;">
+                    <p>Cardápio</p>
+                </a>
+            </div>
+            <div class="item4-content" id="item4-entrar">
+                <a href="/login" style="text-decoration: none; color:white;">
+                    <p>Entrar</p>
+                </a>
+            </div>
+            <div class="item4-content" id="item4-usuario" style="display: none;">
+                <span id="header-nome-usuario" style="color:white;"></span>
+                &nbsp;|&nbsp;
+                <a href="#" onclick="logout()" style="text-decoration: none; color:white;">
+                    <p>Sair</p>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container-background">
+            <img src="/img/background-home.jpg" alt="background"/>
+        </div>
+
+        <div class="container-main">
+            <div class="container-main-content1" onclick="window.location.href='/cardapio'">
+                <p>CARDÁPIO</p>
+            </div>
+            <div class="container-main-content2" onclick="irParaReserva()">
+                <p>RESERVA</p>
+            </div>
+        </div>
+        
+        <footer class="container-rodape">
+            <div class="container-content3">
+                <p>Rua 7 Setor comercial - Luziania .Go - (55) 5555-5555</p>
+            </div>
+        </footer>
+
+    </main>
+
+    <script src="/js/index.js"></script>
+
+</body>
+
+</html>

@@ -28,7 +28,7 @@ public class Usuario {
     @Column(nullable = false, length = 255)
     private String senha;
 
-    @Enumerated(EnumType.STRING) //Passa o Role como String para o banco de dados
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private Role perfil;
 

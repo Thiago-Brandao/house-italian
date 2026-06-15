@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Italian — Reserva</title>
+    <link rel="stylesheet" href="/css/reserva.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="/" class="navbar-brand">House-Italian</a>
+    <div class="navbar-links">
+        <a href="/">Home</a>
+        <a href="/cardapio">Cardápio</a>
+        <span id="nav-usuario">
+            <a href="#" onclick="irParaDashboard()" id="nav-nome"></a>
+            &nbsp;|&nbsp;
+            <a href="#" onclick="logout()">Sair</a>
+        </span>
+    </div>
+</nav>
+
+<div class="reserva-bg">
+    <div class="reserva-container">
+        <h1>Faça sua Reserva</h1>
+        
+        <div class="form-group">
+            <label for="select-mesa">Mesa</label>
+            <select id="select-mesa">
+                <option value="">Carregando mesas...</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="data-inicio">Data e Hora de Início</label>
+            <input type="datetime-local" id="data-inicio">
+        </div>
+        
+        <div class="form-group">
+            <label for="data-fim">Data e Hora de Término</label>
+            <input type="datetime-local" id="data-fim">
+        </div>
+        
+        <div class="form-group">
+            <label for="numero-pessoas">Número de Pessoas</label>
+            <input type="number" id="numero-pessoas" min="1" value="1">
+        </div>
+        
+        <div class="form-group">
+            <label for="observacao">Observação (opcional)</label>
+            <textarea id="observacao" rows="3"></textarea>
+        </div>
+        
+        <button class="btn-reservar" onclick="criarReserva()">Reservar</button>
+        
+        <h2>Minhas Reservas</h2>
+        <div id="minhas-reservas">
+            <p>Carregando reservas...</p>
+        </div>
+    </div>
+    
+    <div class="page-footer">
+        Rua 7 Setor Comercial - Luziânia, GO &nbsp;·&nbsp; (55) 5555-5555
+    </div>
+</div>
+
+<script src="/js/reserva.js"></script>
+
+</body>
+</html>

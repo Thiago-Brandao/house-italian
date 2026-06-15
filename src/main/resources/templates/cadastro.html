@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/loginScreamStyle.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="item1-content">
+                <p>House-Italian</p>
+            </div>
+            <div class="item2-content">
+                <a href="/" style="text-decoration: none; color:white;">
+                    <p>Home</p>
+                </a>
+            </div>
+            <div class="item3-content">
+                <a href="/cardapio" style="text-decoration: none; color:white;">
+                    <p>Cardápio</p>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container-background">
+            <img src="/img/background-home.jpg" alt="background"/>
+        </div>
+
+        <div class="container-main">
+            <div class="container-box-Login">
+                <div class="container-box2-login">
+                    <div class="container-box2-item1-content">
+                        <P>CADASTRO</P>
+                    </div>
+                    <div class="container-box2-item2-content">
+                        <p class="text-email"><b>NOME</b>:</p>
+                        <input type="text" id="input-nome" placeholder="Digite seu nome">
+
+                        <p class="text-email"><b>EMAIL</b>:</p>
+                        <input type="email" id="input-email" placeholder="Digite seu email">
+
+                        <p class="text-senha"><b>SENHA</b>:</p>
+                        <input type="password" id="input-senha" placeholder="Digite sua senha (mínimo 8 caracteres)">
+                        
+                        <div class="container-input-entrar">
+                            <input class="input-entrar" type="button" value="CADASTRAR"  
+                                   style="color: white; font-family: 'Inria Sans', sans-serif;" 
+                                   onclick="fazerCadastro()">
+                        </div>
+
+                        <p style="margin-top: 1rem;">
+                            Já tem conta? <a href="/login" style="color: #8B4513;">Faça login</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/js/cadastro.js"></script>
+</body>
+</html>
