@@ -10,6 +10,7 @@ import br.edu.ifg.utils.AcoesLog;
 import io.quarkus.elytron.security.common.BcryptUtil;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.NewCookie;
@@ -33,7 +34,12 @@ public class AuthController {
     @POST
     @Path("/login")
     @Transactional
-    public Response login(LoginRequestDTO dto) {
+    public Response login(@Valid LoginRequestDTO dto) {
+        if (dto == null) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(new MensagemErro("Corpo da requisição inválido."))
+                    .build();
+        }
 
         // Busca usuário pelo email
         Optional<Usuario> optional = usuarioDAO.buscarPorEmail(dto.email());

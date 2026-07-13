@@ -60,6 +60,13 @@ public class WebController {
         return readHtmlFile("templates/dashboard.html");
     }
 
+    @GET
+    @Path("/perfil")
+    @Produces(MediaType.TEXT_HTML)
+    public String perfilPage() throws IOException {
+        return readHtmlFile("templates/perfil.html");
+    }
+
     private String readHtmlFile(String filePath) throws IOException {
         try (InputStream is = getClass().getResourceAsStream("/" + filePath)) {
             if (is == null) {

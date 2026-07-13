@@ -1,209 +1,161 @@
+/* Reset & Base */
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
     margin: 0;
     font-family: 'Inria Sans', sans-serif;
-    background-color: #f5f0eb;
+    background-color: #faf7f2;
+    color: #222;
+    line-height: 1.6;
 }
 
-.header-container {
-    display: grid;
-    grid-template-columns: 1fr auto auto auto;
-    align-items: center;
-    width: 100%;
-    height: 100px;
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.412);
-    z-index: 100;
+h1, h2, h3, h4 {
+    font-family: 'Playfair Display', 'Inria Serif', serif;
 }
 
-.item1-content {
-    padding-left: 24px;
-    font-family: Inria Serif;
-    font-size: 24px;
-    width: 100%;
-    display: flex;
-    justify-content: start;
-    color: white;
-}
-
-.item2-content,
-.item3-content,
-.item4-content {
-    padding: 0 24px;
-    font-family: Inria Serif;
-    font-size: 24px;
-    display: flex;
-    align-items: center;
-    color: white;
-}
-
-.item2-content a,
-.item3-content a,
-.item4-content a {
-    color: white;
+a {
     text-decoration: none;
+    color: inherit;
 }
 
-.item4-content span {
-    font-family: Inria Serif;
-}
-
-.container-main {
-    display: grid;
-    justify-items: end;
-    grid-template-columns: auto auto;
-    grid-gap: 20px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    align-items: center;
-    width: 100%;
-    position: absolute;
-    z-index: 10;
-}
-
-.container-main-content1, .container-main-content2 {
-    margin: auto;
-    font-size: 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-.container-rodape {
-    display: grid;
-    justify-items: center;
-    bottom: 5%;
-    left: 50%;
-    transform: translateX(-50%);
-    align-items: center;
-    width: 100%;
-    position: absolute;
-    z-index: 10;
-}
-
-.container-content3 {
-    display: flex;
-    font-size: 20px;
-    align-items: center;
-    justify-content: center;
-    color: white;
-}
-
-.container-background > img {
-    width: 100%;
-    height: 100vh;
-    object-fit: cover;
-}
-
-/* Navbar */
-.navbar {
-    background: linear-gradient(135deg, #8B4513 0%, #654321 100%);
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-}
-
-.navbar-brand {
-    font-family: 'Inria Serif', serif;
-    font-size: 1.8rem;
-    color: white;
-    text-decoration: none;
-}
-
-.navbar-links {
-    display: flex;
-    gap: 2rem;
-    align-items: center;
-}
-
-.navbar-links a {
-    color: white;
-    text-decoration: none;
-    font-size: 1.1rem;
-    transition: opacity 0.3s;
-}
-
-.navbar-links a:hover {
-    opacity: 0.8;
-}
-
-.navbar-links .hidden {
-    display: none !important;
-}
-
-/* Cardápio */
-.cardapio-bg {
-    min-height: 100vh;
-    background: linear-gradient(135deg, #f5f0eb 0%, #e8d8c8 100%);
-    padding: 2rem;
-}
-
-.cardapio-container {
-    max-width: 1000px;
+.container {
+    max-width: 1200px;
     margin: 0 auto;
-    background: white;
-    border-radius: 12px;
-    padding: 2rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    padding: 0 2rem;
 }
 
-.cardapio-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.cardapio-table th {
-    background: #8B4513;
-    color: white;
-    padding: 1rem;
-    text-align: left;
-}
-
-.cardapio-table td {
-    padding: 1rem;
-    border-bottom: 1px solid #eee;
-}
-
-.cardapio-table tr:hover {
-    background: #f9f5f0;
+.hidden {
+    display: none !important;
 }
 
 .text-center {
     text-align: center;
 }
 
-/* Reserva */
-.reserva-bg {
-    min-height: 100vh;
-    background: linear-gradient(135deg, #f5f0eb 0%, #e8d8c8 100%);
-    padding: 2rem;
+/* Navbar */
+.navbar {
+    background: #5c3018;
+    padding: 1.2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-.reserva-container {
-    max-width: 800px;
-    margin: 0 auto;
+.navbar-brand {
+    font-family: 'Playfair Display', 'Inria Serif', serif;
+    font-size: 2rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 700;
+}
+
+.navbar-brand i {
+    color: #c9a25a;
+    font-size: 2.2rem;
+}
+
+.navbar-links {
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+}
+
+.navbar-links > a {
+    color: white;
+    font-size: 1.15rem;
+    transition: color 0.3s;
+    font-weight: 500;
+}
+
+.navbar-links > a:hover {
+    color: #c9a25a;
+}
+
+.navbar-user {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    border-left: 1px solid rgba(255,255,255,0.3);
+    padding-left: 2rem;
+}
+
+.navbar-user a {
+    color: white;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.3s;
+}
+
+.navbar-user a:hover {
+    color: #c9a25a;
+}
+
+.btn-entrar {
+    background: transparent;
+    color: white !important;
+    padding: 0.6rem 1.5rem;
+    border: 2px solid white;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-entrar:hover {
     background: white;
-    border-radius: 12px;
-    padding: 2rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    color: #5c3018 !important;
 }
 
-.reserva-container h1 {
-    color: #8B4513;
-    font-family: 'Inria Serif', serif;
-    text-align: center;
-    margin-bottom: 2rem;
+/* Buttons */
+.btn-primary {
+    background: #5c3018;
+    color: white;
+    padding: 1.1rem 2.8rem;
+    border: none;
+    border-radius: 0;
+    font-size: 1.2rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+    display: inline-block;
 }
 
+.btn-primary:hover {
+    background: #7a4022;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(92, 48, 24, 0.4);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: white;
+    padding: 1.1rem 2.8rem;
+    border: 2px solid white;
+    border-radius: 0;
+    font-size: 1.2rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+    display: inline-block;
+}
+
+.btn-secondary:hover {
+    background: white;
+    color: #5c3018;
+}
+
+/* Form Styles */
 .form-group {
     margin-bottom: 1.5rem;
 }
@@ -219,158 +171,199 @@ body {
 .form-group select,
 .form-group textarea {
     width: 100%;
-    padding: 0.8rem;
-    border: 2px solid #ddd;
-    border-radius: 8px;
+    padding: 0.9rem;
+    border: 2px solid #e0d8d0;
     font-size: 1rem;
     font-family: inherit;
     transition: border-color 0.3s;
+    background: #fff;
 }
 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #8B4513;
+    border-color: #5c3018;
 }
 
-.btn-reservar,
-.btn-adicionar,
-.btn-salvar {
-    background: linear-gradient(135deg, #8B4513 0%, #654321 100%);
+.btn-form {
+    background: #5c3018;
     color: white;
     border: none;
     padding: 1rem 2rem;
-    border-radius: 8px;
     font-size: 1.1rem;
     cursor: pointer;
     width: 100%;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.btn-reservar:hover,
-.btn-adicionar:hover,
-.btn-salvar:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(139, 69, 19, 0.4);
-}
-
-.reserva-item,
-.mesa-item,
-.usuario-item,
-.reserva-item {
-    background: #f9f5f0;
-    padding: 1.5rem;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-    border-left: 4px solid #8B4513;
-}
-
-.reserva-item h3,
-.mesa-item h4,
-.usuario-item h4,
-.log-item h4 {
-    color: #8B4513;
-    margin-top: 0;
-}
-
-/* Admin Dashboard */
-.admin-dashboard-bg {
-    min-height: 100vh;
-    background: linear-gradient(135deg, #f5f0eb 0%, #e8d8c8 100%);
-    padding: 2rem;
-}
-
-.admin-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    background: white;
-    border-radius: 12px;
-    padding: 2rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-}
-
-.admin-container h1 {
-    color: #8B4513;
-    font-family: 'Inria Serif', serif;
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.admin-tabs {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 1rem;
-    flex-wrap: wrap;
-}
-
-.tab-btn {
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 8px;
-    background: #f0e6dc;
-    color: #333;
-    font-size: 1rem;
-    cursor: pointer;
+    font-weight: 600;
     transition: all 0.3s;
 }
 
-.tab-btn:hover {
-    background: #e0d0c0;
+.btn-form:hover {
+    background: #7a4022;
 }
 
-.tab-btn.active {
-    background: linear-gradient(135deg, #8B4513 0%, #654321 100%);
+/* Section Subtitle & Title */
+.section-subtitle {
+    display: block;
+    font-size: 1rem;
+    color: #c9a25a;
+    letter-spacing: 0.3em;
+    margin-bottom: 0.8rem;
+    text-transform: uppercase;
+}
+
+.section-title {
+    font-size: 2.8rem;
+    margin-bottom: 2.5rem;
+    color: #24201d;
+    line-height: 1.2;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+/* Footer */
+.footer-main {
+    background: #24201d;
+    color: #b8b3ac;
+    padding: 4rem 0 1.5rem 0;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3rem;
+}
+
+.footer-col h3,
+.footer-col h4 {
+    color: white;
+    margin-bottom: 1.25rem;
+}
+
+.footer-col h3 {
+    font-size: 1.8rem;
     color: white;
 }
 
-.tab-content {
-    display: none;
-}
-
-.tab-content.active {
-    display: block;
-}
-
-.log-item {
-    background: #f9f5f0;
-    padding: 1rem;
-    border-radius: 8px;
+.footer-col p {
+    font-size: 1.05rem;
     margin-bottom: 1rem;
-    border-left: 4px solid #8B4513;
-    font-size: 0.95rem;
 }
 
-.page-footer {
+.footer-col p i {
+    margin-right: 0.6rem;
+    color: #c9a25a;
+    width: 1.2rem;
     text-align: center;
-    padding: 2rem;
-    color: #666;
-    font-size: 0.9rem;
 }
 
-/* Buttons in items */
-.reserva-item button,
-.mesa-item button,
-.usuario-item button {
-    background: #8B4513;
+.footer-col a {
+    display: block;
+    font-size: 1.05rem;
+    margin-bottom: 0.5rem;
+    transition: color 0.3s;
+}
+
+.footer-col a:hover {
+    color: #c9a25a;
+}
+
+.footer-social {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.25rem;
+}
+
+.footer-social a {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #444;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.footer-social a:hover {
+    border-color: #c9a25a;
+    color: #c9a25a;
+}
+
+.footer-bottom {
+    border-top: 1px solid #333;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    text-align: center;
+    color: #888;
+}
+
+/* Action Buttons */
+.btn-action {
+    background: #5c3018;
     color: white;
     border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
+    padding: 0.6rem 1.2rem;
     cursor: pointer;
     margin-right: 0.5rem;
     margin-top: 0.5rem;
     font-size: 0.9rem;
+    font-family: inherit;
+    transition: background 0.3s;
 }
 
-.reserva-item button:hover,
-.mesa-item button:hover,
-.usuario-item button:hover {
-    background: #654321;
+.btn-action:hover {
+    background: #7a4022;
 }
 
-.hidden {
-    display: none !important;
+.btn-action.secondary {
+    background: #666;
+}
+
+.btn-action.secondary:hover {
+    background: #444;
+}
+
+/* Fade-in Animation */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 1rem;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .navbar-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1.5rem;
+    }
+    
+    .navbar-user {
+        border-left: none;
+        padding-left: 0;
+    }
+    
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
 }

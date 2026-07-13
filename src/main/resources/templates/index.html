@@ -1,69 +1,175 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/css/style.css">
-        <title>House Italian</title>
-    </head>
-
-    <body>
-
-    <header>
-        <div class="header-container">
-            <div class="item1-content">
-            <p>House-Italian</p>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>House Italian</title>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="/" class="navbar-brand">
+            <i class="fas fa-utensils"></i>
+            House-Italian
+        </a>
+        <div class="navbar-links">
+            <a href="/">Home</a>
+            <a href="/cardapio">Cardápio</a>
+            <a href="#" id="nav-action-link" onclick="irParaReserva()">Reserva</a>
+            <div class="navbar-user" id="navbar-user-logged-out">
+                <a href="/login" class="btn-entrar">Entrar</a>
             </div>
-            <div class="item2-content">
-                <a href="#" onclick="irParaReserva()" style="text-decoration: none; color:white;">
-                    <p>Reserva</p>
+            <div class="navbar-user hidden" id="navbar-user-logged-in">
+                <a href="/perfil">
+                    <i class="far fa-user"></i>
+                    <span id="nav-nome"></span>
                 </a>
-            </div>
-            <div class="item3-content">
-                <a href="/cardapio" style="text-decoration: none; color:white;">
-                    <p>Cardápio</p>
-                </a>
-            </div>
-            <div class="item4-content" id="item4-entrar">
-                <a href="/login" style="text-decoration: none; color:white;">
-                    <p>Entrar</p>
-                </a>
-            </div>
-            <div class="item4-content" id="item4-usuario" style="display: none;">
-                <span id="header-nome-usuario" style="color:white;"></span>
-                &nbsp;|&nbsp;
-                <a href="#" onclick="logout()" style="text-decoration: none; color:white;">
-                    <p>Sair</p>
+                <a href="#" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Sair
                 </a>
             </div>
         </div>
-    </header>
+    </nav>
 
-    <main>
-        <div class="container-background">
-            <img src="/img/background-home.jpg" alt="background"/>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg">
+            <img src="/img/background-home.jpg" alt="Pasta italiana" />
         </div>
-
-        <div class="container-main">
-            <div class="container-main-content1" onclick="window.location.href='/cardapio'">
-                <p>CARDÁPIO</p>
-            </div>
-            <div class="container-main-content2" onclick="irParaReserva()">
-                <p>RESERVA</p>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <p class="hero-pretitle">RISTORANTE ITALIANO</p>
+            <h1 class="hero-title">Autêntica Cozinha Italiana</h1>
+            <p class="hero-subtitle">Experiência gastronômica inesquecível</p>
+            <div class="hero-buttons">
+                <a href="/cardapio" class="btn-primary">Ver Cardápio</a>
+                <a href="#" onclick="irParaReserva()" class="btn-secondary">Fazer Reserva</a>
             </div>
         </div>
-        
-        <footer class="container-rodape">
-            <div class="container-content3">
-                <p>Rua 7 Setor comercial - Luziania .Go - (55) 5555-5555</p>
-            </div>
-        </footer>
+    </section>
 
-    </main>
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-award"></i></div>
+                    <h3>Ingredientes Selecionados</h3>
+                    <p>Produtos frescos e importados da Itália</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-utensils"></i></div>
+                    <h3>Chef Especializado</h3>
+                    <p>Receitas tradicionais italianas</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-user-friends"></i></div>
+                    <h3>Ambiente Acolhedor</h3>
+                    <p>Perfeito para qualquer ocasião</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Destaques Section -->
+    <section class="destaques">
+        <div class="container">
+            <p class="section-pretitle">ESPECIALIDADES</p>
+            <h2 class="section-title">Pratos em Destaque</h2>
+            <div class="destaques-grid">
+                <div class="destaque-card">
+                    <div class="destaque-img">
+                        <!-- Substitua pela imagem da lasanha -->
+                        <img src="https://images.unsplash.com/photo-1619895092538-128341789043?w=600" alt="Lasagna alla Bolognese">
+                    </div>
+                    <div class="destaque-content">
+                        <h3>Lasagna alla Bolognese</h3>
+                        <p>Camadas de massa fresca com ragu de carne e parmesão gratinado.</p>
+                        <span class="destaque-preco">R$ 58,00</span>
+                    </div>
+                </div>
+                <div class="destaque-card">
+                    <div class="destaque-img">
+                        <!-- Substitua pela imagem do fettuccine -->
+                        <img src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=600" alt="Fettuccine Alfredo">
+                    </div>
+                    <div class="destaque-content">
+                        <h3>Fettuccine Alfredo</h3>
+                        <p>Massa achatada em molho cremoso de manteiga e Grana Padano.</p>
+                        <span class="destaque-preco">R$ 52,00</span>
+                    </div>
+                </div>
+                <div class="destaque-card">
+                    <div class="destaque-img">
+                        <!-- Substitua pela imagem do gnocchi -->
+                        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600" alt="Gnocchi de Batata">
+                    </div>
+                    <div class="destaque-content">
+                        <h3>Gnocchi de Batata</h3>
+                        <p>Almofadas de batata ao molho de tomate caseiro e manjericão.</p>
+                        <span class="destaque-preco">R$ 48,00</span>
+                    </div>
+                </div>
+            </div>
+            <a href="/cardapio" class="btn-ver-cardapio">Ver Cardápio Completo <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </section>
+
+    <!-- Nossa História Section -->
+    <section class="historia">
+        <div class="container">
+            <div class="historia-grid">
+                <div class="historia-content">
+                    <p class="section-pretitle">NOSSA HISTÓRIA</p>
+                    <h2 class="section-title">Tradição Italiana em Cada Detalhe</h2>
+                    <p>No House-Italian, cada prato é uma homenagem à rica tradição culinária italiana. Nossas receitas foram transmitidas através de gerações, preservando os sabores autênticos que fazem da cozinha italiana uma das mais amadas do mundo.</p>
+                    <p>Com um ambiente acolhedor e elegante, oferecemos uma experiência gastronômica inesquecível, onde cada refeição é uma celebração.</p>
+                    <a href="#" onclick="irParaReserva()" class="btn-primary btn-historia">Reserve sua Mesa</a>
+                </div>
+                <div class="historia-img">
+                    <!-- Substitua pela imagem do restaurante -->
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800" alt="Interior do restaurante">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-main">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>House-Italian</h3>
+                    <p>Autêntica cozinha italiana em Luziânia. Tradição, sabor e elegância em cada prato.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Contato</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> Rua 7, Setor Comercial<br>Luziânia, GO</p>
+                    <p><i class="fas fa-phone"></i> (64) 3555-5555</p>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Navegação</h4>
+                    <a href="/">Home</a>
+                    <a href="/cardapio">Cardápio</a>
+                    <a href="#" onclick="irParaReserva()">Reservas</a>
+                    <a href="/perfil">Meu Perfil</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 House-Italian · IFG Campus Luziânia · Programação para Web</p>
+        </div>
+    </footer>
 
     <script src="/js/index.js"></script>
-
 </body>
-
 </html>

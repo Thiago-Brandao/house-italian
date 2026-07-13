@@ -1,0 +1,220 @@
+/* Perfil Page Styles */
+.perfil-section {
+    padding: 4rem 0;
+    background: #faf7f2;
+    min-height: 70vh;
+}
+
+.perfil-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.perfil-card {
+    background: white;
+    max-width: 900px;
+    margin: 0 auto;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    border: 1px solid #eee;
+}
+
+.perfil-banner {
+    background: #5c3018;
+    height: 120px;
+    position: relative;
+}
+
+.perfil-content {
+    padding: 2.5rem;
+    position: relative;
+}
+
+.perfil-avatar-initials {
+    width: 100px;
+    height: 100px;
+    background: #f0e6dc;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-family: 'Playfair Display', serif;
+    color: #5c3018;
+    font-weight: 700;
+    border: 4px solid white;
+    position: absolute;
+    top: -50px;
+    left: 2.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.perfil-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.perfil-field {
+    background: #faf7f2;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.perfil-field-icon {
+    width: 45px;
+    height: 45px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #5c3018;
+    font-size: 1.2rem;
+}
+
+.perfil-field-content {
+    flex: 1;
+}
+
+.perfil-field-label {
+    display: block;
+    font-size: 0.85rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+}
+
+.perfil-field-value {
+    font-size: 1rem;
+    color: #24201d;
+    font-weight: 500;
+}
+
+.perfil-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eee;
+}
+
+/* Reservas Section */
+.perfil-reservas-section {
+    margin-top: 3rem;
+}
+
+.perfil-reservas-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.perfil-reservas-header i {
+    color: #5c3018;
+    font-size: 1.5rem;
+}
+
+.perfil-reservas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+.perfil-empty-state {
+    text-align: center;
+    padding: 3rem;
+    width: 100%;
+}
+
+.perfil-empty-icon {
+    width: 70px;
+    height: 70px;
+    background: #f0e6dc;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    color: #888;
+    font-size: 1.8rem;
+}
+
+.perfil-empty-state p {
+    color: #888;
+    margin-bottom: 0.5rem;
+}
+
+.perfil-empty-state small {
+    color: #aaa;
+    display: block;
+    margin-bottom: 1.5rem;
+}
+
+/* Reserva Card for Perfil Page */
+.reserva-card {
+    background: #faf7f2;
+    padding: 1.5rem;
+    border-left: 4px solid #5c3018;
+}
+
+.reserva-card h4 {
+    color: #5c3018;
+    margin: 0 0 0.75rem 0;
+    font-family: 'Playfair Display', serif;
+}
+
+.reserva-card p {
+    color: #555;
+    margin-bottom: 0.4rem;
+    font-size: 0.95rem;
+}
+
+.reserva-card p strong {
+    color: #24201d;
+}
+
+.reserva-status {
+    display: inline-block;
+    padding: 0.35rem 0.8rem;
+    border-radius: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 0.75rem;
+}
+
+.reserva-status.pendente {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.reserva-status.confirmada {
+    background: #d4edda;
+    color: #155724;
+}
+
+.reserva-status.cancelada {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .perfil-info-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .perfil-avatar-initials {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .perfil-content {
+        padding-top: 4rem;
+    }
+}

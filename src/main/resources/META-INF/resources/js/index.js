@@ -16,16 +16,15 @@ function irParaReserva() {
 function logout() {
     fetch('/api/auth/logout', {
         method: 'POST',
-        credentials: 'same-origin' // Necessário para enviar/remover cookies
+        credentials: 'same-origin'
     })
     .then(() => {
         localStorage.clear();
         atualizarNavbar();
-        window.location.href = '/'; // Redireciona para a página inicial
+        window.location.href = '/';
     })
     .catch((erro) => {
         console.error('Erro ao fazer logout:', erro);
-        // Mesmo com erro, limpa o localStorage
         localStorage.clear();
         atualizarNavbar();
         window.location.href = '/';
@@ -33,18 +32,25 @@ function logout() {
 }
 
 function atualizarNavbar() {
-    const itemEntrar = document.getElementById('item4-entrar');
-    const itemUsuario = document.getElementById('item4-usuario');
-    const nomeSpan = document.getElementById('header-nome-usuario');
+    const btnEntrar = document.getElementById('navbar-user-logged-out');
+    const navUsuario = document.getElementById('navbar-user-logged-in');
+    const navNome = document.getElementById('nav-nome');
+    const actionLink = document.getElementById('nav-action-link');
 
     if (getToken()) {
-        itemEntrar.style.display = 'none';
-        itemUsuario.style.display = 'block';
-        nomeSpan.textContent = getNome();
+        if (btnEntrar) btnEntrar.classList.add('hidden');
+        if (navUsuario) navUsuario.classList.remove('hidden');
+        if (navNome) navNome.textContent = getNome();
     } else {
-        itemEntrar.style.display = 'block';
-        itemUsuario.style.display = 'none';
+        if (btnEntrar) btnEntrar.classList.remove('hidden');
+        if (navUsuario) navUsuario.classList.add('hidden');
+    }
+
+    if (actionLink) {
+        actionLink.textContent = getToken() && getPerfil() === 'ADMIN' ? 'Painel' : 'Reserva';
     }
 }
 
-atualizarNavbar();
+document.addEventListener('DOMContentLoaded', function() {
+    atualizarNavbar();
+});

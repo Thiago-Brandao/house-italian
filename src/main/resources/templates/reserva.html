@@ -4,68 +4,134 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>House Italian — Reserva</title>
+    <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/reserva.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inria+Serif:wght@300;400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
+    <nav class="navbar">
+        <a href="/" class="navbar-brand">
+            <i class="fas fa-utensils"></i>
+            House-Italian
+        </a>
+        <div class="navbar-links">
+            <a href="/">Home</a>
+            <a href="/cardapio">Cardápio</a>
+            <a href="#" id="nav-action-link" onclick="irParaReserva()">Reserva</a>
+            <div class="navbar-user" id="navbar-user-logged-out">
+                <a href="/login" class="btn-entrar">Entrar</a>
+            </div>
+            <div class="navbar-user hidden" id="navbar-user-logged-in">
+                <a href="/perfil">
+                    <i class="far fa-user"></i>
+                    <span id="nav-nome"></span>
+                </a>
+                <a href="#" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Sair
+                </a>
+            </div>
+        </div>
+    </nav>
 
-<nav class="navbar">
-    <a href="/" class="navbar-brand">House-Italian</a>
-    <div class="navbar-links">
-        <a href="/">Home</a>
-        <a href="/cardapio">Cardápio</a>
-        <span id="nav-usuario">
-            <a href="#" onclick="irParaDashboard()" id="nav-nome"></a>
-            &nbsp;|&nbsp;
-            <a href="#" onclick="logout()">Sair</a>
-        </span>
-    </div>
-</nav>
+   
+    <section class="reserva-hero">
+        <div class="reserva-hero-img">
+            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200" alt="Reservas">
+        </div>
+        <div class="reserva-hero-content">
+            <span class="section-subtitle fade-in">Booking</span>
+            <h2 class="section-title fade-in">Faça sua Reserva</h2>
+            
+            <div class="reserva-form-container fade-in">
+                <div class="form-group" id="group-mesa">
+                    <label for="select-mesa">Mesa</label>
+                    <select id="select-mesa">
+                        <option value="">Selecione uma mesa</option>
+                    </select>
+                    <span class="error-message"></span>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group" id="group-inicio">
+                        <label for="data-inicio">Início</label>
+                        <input type="datetime-local" id="data-inicio">
+                        <span class="error-message"></span>
+                    </div>
+                    
+                    <div class="form-group" id="group-fim">
+                        <label for="data-fim">Término</label>
+                        <input type="datetime-local" id="data-fim">
+                        <span class="error-message"></span>
+                    </div>
+                </div>
+                
+                <div class="form-group" id="group-pessoas">
+                    <label for="numero-pessoas">Número de Pessoas</label>
+                    <input type="number" id="numero-pessoas" min="1" value="1">
+                    <span class="error-message"></span>
+                </div>
+                
+                <div class="form-group" id="group-observacao">
+                    <label for="observacao">Observação (opcional)</label>
+                    <textarea id="observacao" rows="3" placeholder="Alguma preferência especial?"></textarea>
+                </div>
+                
+                <button class="btn-primary btn-full" onclick="criarReserva()">Reservar</button> // button Reservar
+                <div class="form-success hidden" id="form-success">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Reserva criada com sucesso!</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<div class="reserva-bg">
-    <div class="reserva-container">
-        <h1>Faça sua Reserva</h1>
-        
-        <div class="form-group">
-            <label for="select-mesa">Mesa</label>
-            <select id="select-mesa">
-                <option value="">Carregando mesas...</option>
-            </select>
-        </div>
-        
-        <div class="form-group">
-            <label for="data-inicio">Data e Hora de Início</label>
-            <input type="datetime-local" id="data-inicio">
-        </div>
-        
-        <div class="form-group">
-            <label for="data-fim">Data e Hora de Término</label>
-            <input type="datetime-local" id="data-fim">
-        </div>
-        
-        <div class="form-group">
-            <label for="numero-pessoas">Número de Pessoas</label>
-            <input type="number" id="numero-pessoas" min="1" value="1">
-        </div>
-        
-        <div class="form-group">
-            <label for="observacao">Observação (opcional)</label>
-            <textarea id="observacao" rows="3"></textarea>
-        </div>
-        
-        <button class="btn-reservar" onclick="criarReserva()">Reservar</button>
-        
-        <h2>Minhas Reservas</h2>
-        <div id="minhas-reservas">
-            <p>Carregando reservas...</p>
-        </div>
-    </div>
     
-    <div class="page-footer">
-        Rua 7 Setor Comercial - Luziânia, GO &nbsp;·&nbsp; (55) 5555-5555
-    </div>
-</div>
+    <section class="reservas-section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <span class="section-subtitle">Minhas Reservas</span>
+                <h2 class="section-title">Suas Reservas</h2>
+            </div>
+            <div id="minhas-reservas" class="reservas-grid fade-in">
+                <p class="text-center" style="width: 100%; color: #666; padding: 2rem;">Carregando reservas...</p>
+            </div>
+        </div>
+    </section>
 
-<script src="/js/reserva.js"></script>
+    <footer class="footer-main">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>House-Italian</h3>
+                    <p>Autêntica cozinha italiana em Luziânia. Tradição, sabor e elegância em cada prato.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Contato</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> Rua 7, Setor Comercial<br>Luziânia, GO</p>
+                    <p><i class="fas fa-phone"></i> (64) 3555-5555</p>
+                </div>
 
+                <div class="footer-col">
+                    <h4>Navegação</h4>
+                    <a href="/">Home</a>
+                    <a href="/cardapio">Cardápio</a>
+                    <a href="#" onclick="irParaReserva()">Reservas</a>
+                    <a href="/perfil">Meu Perfil</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 House-Italian · IFG Campus Luziânia · Programação para Web</p>
+        </div>
+    </footer>
+
+    <script src="/js/index.js"></script>
+    <script src="/js/reserva.js"></script>
 </body>
 </html>

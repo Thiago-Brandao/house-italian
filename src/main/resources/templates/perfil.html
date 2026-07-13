@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>House Italian — Cardápio</title>
+    <title>House Italian — Meu Perfil</title>
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/cardapio.css">
+    <link rel="stylesheet" href="/css/perfil.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar">
@@ -34,35 +35,42 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="cardapio-hero">
-        <div class="cardapio-hero-bg">
-            <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=1600" alt="Pasta italiana">
-        </div>
-        <div class="cardapio-hero-overlay"></div>
-        <div class="cardapio-hero-content">
-            <p class="section-subtitle">DELIZIOSO</p>
-            <h2 class="section-title" style="color: white;">Nosso Cardápio</h2>
+    <section class="perfil-section">
+        <div class="container">
+            <div class="perfil-header fade-in">
+                <span class="section-subtitle">Minha Conta</span>
+                <h2 class="section-title">Meu Perfil</h2>
+            </div>
+
+            <div class="perfil-card fade-in">
+                <div class="perfil-banner"></div>
+                <div class="perfil-content" id="perfil-content">
+                    <div class="perfil-avatar-initials" id="perfil-initials">U</div>
+                    <div class="perfil-info-grid" id="perfil-info-grid">
+                        <div class="text-center" style="grid-column: 1/-1; padding: 2rem; color: #666;">Carregando...</div>
+                    </div>
+                    <div class="perfil-actions">
+                        <a href="/reserva" class="btn-primary">Fazer Nova Reserva</a>
+                        <a href="#" onclick="logout()" class="btn-secondary">Sair da Conta</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="perfil-reservas-section fade-in">
+                <div class="perfil-card" style="margin-top: 3rem;">
+                    <div class="perfil-content">
+                        <div class="perfil-reservas-header">
+                            <i class="far fa-calendar-alt"></i>
+                            <h3 class="section-title" style="font-size: 1.8rem; margin-bottom: 0;">Minhas Reservas</h3>
+                        </div>
+                        <div id="minhas-reservas" class="perfil-reservas-grid">
+                            <div class="text-center" style="grid-column: 1/-1; padding: 2rem; color: #666;">Carregando...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
-
-    <!-- Content Section -->
-    <div class="page-bg">
-        <div class="page-container">
-            <!-- Category Tabs -->
-            <div class="cardapio-tabs">
-                <button class="cardapio-tab-btn active" data-categoria="TODOS">Todos</button>
-                <button class="cardapio-tab-btn" data-categoria="ENTRADAS">Entradas</button>
-                <button class="cardapio-tab-btn" data-categoria="MASSAS">Massas</button>
-                <button class="cardapio-tab-btn" data-categoria="PRATOS_PRINCIPAIS">Pratos Principais</button>
-                <button class="cardapio-tab-btn" data-categoria="SOBREMESAS">Sobremesas</button>
-            </div>
-
-            <div class="cardapio-grid" id="cardapio-grid">
-                <div class="text-center" style="width: 100%; padding: 2rem;">Carregando...</div>
-            </div>
-        </div>
-    </div>
 
     <footer class="footer-main">
         <div class="container">
@@ -70,6 +78,10 @@
                 <div class="footer-col">
                     <h3>House-Italian</h3>
                     <p>Autêntica cozinha italiana em Luziânia. Tradição, sabor e elegância em cada prato.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    </div>
                 </div>
                 <div class="footer-col">
                     <h4>Contato</h4>
@@ -92,6 +104,6 @@
     </footer>
 
     <script src="/js/index.js"></script>
-    <script src="/js/cardapio.js"></script>
+    <script src="/js/perfil.js"></script>
 </body>
 </html>

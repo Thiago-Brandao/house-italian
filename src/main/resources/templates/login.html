@@ -4,58 +4,74 @@
         <meta charset="UTF-8">
         <title>Login</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <link rel="stylesheet" href="/css/loginScreamStyle.css">
     </head>
 
     <body>
-        <header>
-            <div class="header-container">
-                <div class="item1-content">
-                    <p>House-Italian</p>
+        <nav class="navbar">
+            <a href="/" class="navbar-brand">
+                <i class="fas fa-utensils"></i>
+                House-Italian
+            </a>
+            <div class="navbar-links">
+                <a href="/">Home</a>
+                <a href="/cardapio">Cardápio</a>
+                <a href="#" onclick="irParaReserva()">Reserva</a>
+                <div class="navbar-user" id="navbar-user-logged-out">
+                    <a href="/login" class="btn-entrar">Entrar</a>
                 </div>
-                <div class="item2-content">
-                     <a href="/" style="text-decoration: none; color:white;">
-                    <p>Home</p></a>
-                </div>
-                <div class="item3-content">
-                    <a href="/cardapio" style="text-decoration: none; color:white;">
-                    <p>Cardápio</p></a>
+                <div class="navbar-user hidden" id="navbar-user-logged-in">
+                    <a href="/perfil">
+                        <i class="far fa-user"></i>
+                        <span id="nav-nome"></span>
+                    </a>
+                    <a href="#" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Sair
+                    </a>
                 </div>
             </div>
-        </header>
+        </nav>
 
-        <main> 
-        <div class="container-background">
-            <img src="/img/background-home.jpg" alt="background"/>
-        </div>
-
-       <div class="container-main">
-            <div class="container-box-Login">
-                <div class="container-box2-login">
-                    <div class="container-box2-item1-content">
-                        <P>LOGIN</P>
+        <main>
+            <div class="container-main">
+                <section class="hero-panel">
+                    <div class="hero-content">
+                        <span class="hero-tagline">Junte-se a nós</span>
+                        <h1>Uma experiência italiana inesquecível</h1>
+                        <p>Faça login para reservar mesas, acompanhar o cardápio e desfrutar momentos especiais no House-Italian.</p>
                     </div>
-                        <div class="container-box2-item2-content">
-                            <p class="text-email"><b>EMAIL</b>:</p>
-                            <input type="email" id="input-email" placeholder="Digite seu email">
+                </section>
 
-                            <p class="text-senha"><b>SENHA</b>:</p>
-                            <input type="password" id="input-senha" placeholder="Digite sua senha">
-                            <div class="container-input-entrar">
-                                <input class="input-entrar" type="button" value="ENTRAR"  style="color: white; font-family: 'Inria Sans', sans-serif;" onclick="fazerLogin()">
-                            </div>
-                            
-                            <p style="margin-top: 1rem; text-align: center;">
-                                Não tem conta? <a href="/cadastro" style="color: #8B4513;">Cadastre-se</a>
-                            </p>
-                            
+                <section class="form-panel">
+                    <div class="form-box2-item1-content">
+                        <p>LOGIN</p>
+                    </div>
+                    <p class="form-subtitle">Acesse sua conta e continue sua jornada.</p>
+                    <form id="form-login" onsubmit="event.preventDefault(); fazerLogin();">
+                        <label for="input-email">Email</label>
+                        <input type="email" id="input-email" name="email" placeholder="seu@email.com" required>
+                        <span class="error-message" id="error-email"></span>
+
+                        <label for="input-senha">Senha</label>
+                        <input type="password" id="input-senha" name="senha" placeholder="Digite sua senha" required minlength="8">
+                        <span class="error-message" id="error-senha"></span>
+
+                        <span class="form-error-message" id="error-form"></span>
+
+                        <div class="container-input-entrar">
+                            <button class="input-entrar" type="submit" style="color: white; font-family: 'Inria Sans', sans-serif;">ENTRAR</button>
                         </div>
-                </div>
+                    </form>
+                    <p class="form-footer-text">Não tem conta? <a href="/cadastro">Cadastre-se</a></p>
+                </section>
             </div>
-       </div>
         </main>
 
         <script src="/js/login.js"></script>
+        <script src="/js/index.js"></script>
 
     </body>
 

@@ -1,10 +1,6 @@
 const API = 'http://localhost:8080';
 let mesaIdEditar = null;
 
-function getToken()  { return localStorage.getItem('token'); }
-function getPerfil() { return localStorage.getItem('perfil'); }
-function getNome()   { return localStorage.getItem('nome'); }
-
 function getAuthHeaders() {
     return {
         'Content-Type': 'application/json',
@@ -12,33 +8,13 @@ function getAuthHeaders() {
     };
 }
 
-function logout() {
-    fetch('/api/auth/logout', {
-        method: 'POST',
-        credentials: 'same-origin' // Necessário para enviar/remover cookies
-    })
-    .then(() => {
-        localStorage.clear();
-        window.location.href = '/'; // Redireciona para a página inicial
-    })
-    .catch((erro) => {
-        console.error('Erro ao fazer logout:', erro);
-        // Mesmo com erro, limpa o localStorage
-        localStorage.clear();
-        window.location.href = '/';
-    });
-}
-
-function atualizarNavbar() {
-    document.getElementById('nav-nome').textContent = getNome();
-}
-
 function mostrarTab(tabId) {
     document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
     
-    document.getElementById('tab-' + tabId).classList.add('active');
-    event.target.classList.add('active');
+    const tab = document.getElementById('tab-' + tabId);
+    if (tab) tab.classList.add('active');
+    if (event && event.target) event.target.classList.add('active');
 
     if (tabId === 'mesas') carregarMesasAdmin();
     if (tabId === 'reservas') carregarReservasAdmin();
@@ -62,8 +38,8 @@ async function carregarMesasAdmin() {
                 <p>Localização: ${m.localizacao}</p>
                 <p>Capacidade: ${m.capacidade}</p>
                 <p>Status: ${m.ativa ? 'Ativa' : 'Inativa'}</p>
-                <button onclick="editarMesa(${m.id})">Editar</button>
-                <button onclick="alterarStatusMesa(${m.id}, ${!m.ativa})">
+                <button class="btn-action" onclick="editarMesa(${m.id})">Editar</button>
+                <button class="btn-action secondary" onclick="alterarStatusMesa(${m.id}, ${!m.ativa})">
                     ${m.ativa ? 'Inativar' : 'Ativar'}
                 </button>
             </div>
@@ -83,10 +59,32 @@ function abrirModalMesa(mesa = null) {
     document.getElementById('modal-mesa').classList.remove('hidden');
 }
 
+function atualizarResumo() {
+    Promise.all([
+        fetch(`${API}/api/mesas?todas=true`, { headers: getAuthHeaders(), credentials: 'same-origin' }).then(r => r.json()),
+        fetch(`${API}/api/reservas`, { headers: getAuthHeaders(), credentials: 'same-origin' }).then(r => r.json()),
+        fetch(`${API}/api/usuarios`, { headers: getAuthHeaders(), credentials: 'same-origin' }).then(r => r.json()),
+        fetch(`${API}/api/auditoria`, { headers: getAuthHeaders(), credentials: 'same-origin' }).then(r => r.json())
+    ])
+    .then(([mesas, reservas, usuarios, logs]) => {
+        document.getElementById('summary-mesas').textContent = mesas.length;
+        document.getElementById('summary-reservas').textContent = reservas.length;
+        document.getElementById('summary-usuarios').textContent = usuarios.length;
+        document.getElementById('summary-logs').textContent = logs.length;
+    })
+    .catch(() => {
+        document.getElementById('summary-mesas').textContent = '-';
+        document.getElementById('summary-reservas').textContent = '-';
+        document.getElementById('summary-usuarios').textContent = '-';
+        document.getElementById('summary-logs').textContent = '-';
+    });
+}
+
 function fecharModalMesa() {
     document.getElementById('modal-mesa').classList.add('hidden');
 }
 
+// Função salvar mesa
 async function salvarMesa() {
     const numero = parseInt(document.getElementById('modal-mesa-numero').value);
     const capacidade = parseInt(document.getElementById('modal-mesa-capacidade').value);
@@ -119,6 +117,7 @@ async function salvarMesa() {
     }
 }
 
+// Editar mesa
 async function editarMesa(id) {
     try {
         const res = await fetch(`${API}/api/mesas/${id}`, {
@@ -131,11 +130,13 @@ async function editarMesa(id) {
     }
 }
 
+// Inativar
 async function alterarStatusMesa(id, ativa) {
     try {
         const res = await fetch(`${API}/api/mesas/${id}/status?ativa=${ativa}`, {
             method: 'PUT',
-            headers: getAuthHeaders()
+            headers: getAuthHeaders(),
+            credentials: 'same-origin'
         });
 
         if (res.ok) {
@@ -154,7 +155,8 @@ async function alterarStatusMesa(id, ativa) {
 async function carregarReservasAdmin() {
     try {
         const res = await fetch(`${API}/api/reservas`, {
-            headers: getAuthHeaders()
+            headers: getAuthHeaders(),
+            credentials: 'same-origin'
         });
         const reservas = await res.json();
         const container = document.getElementById('lista-reservas-admin');
@@ -167,10 +169,10 @@ async function carregarReservasAdmin() {
                 <p>Data: ${new Date(r.dataHoraInicio).toLocaleString('pt-BR')}</p>
                 <p>Status: ${r.status}</p>
                 ${r.status === 'PENDENTE' 
-                    ? `<button onclick="confirmarReserva(${r.id})">Confirmar</button>` 
+                    ? `<button class="btn-action" onclick="confirmarReserva(${r.id})">Confirmar</button>` 
                     : ''}
                 ${r.status === 'CONFIRMADA' 
-                    ? `<button onclick="concluirReserva(${r.id})">Concluir</button>` 
+                    ? `<button class="btn-action secondary" onclick="concluirReserva(${r.id})">Concluir</button>` 
                     : ''}
             </div>
         `).join('');
@@ -179,11 +181,13 @@ async function carregarReservasAdmin() {
     }
 }
 
+// Confirmar reserva
 async function confirmarReserva(id) {
     try {
         const res = await fetch(`${API}/api/reservas/${id}/confirmar`, {
             method: 'PUT',
-            headers: getAuthHeaders()
+            headers: getAuthHeaders(),
+            credentials: 'same-origin'
         });
 
         if (res.ok) {
@@ -202,7 +206,8 @@ async function concluirReserva(id) {
     try {
         const res = await fetch(`${API}/api/reservas/${id}/concluir`, {
             method: 'PUT',
-            headers: getAuthHeaders()
+            headers: getAuthHeaders(),
+            credentials: 'same-origin'
         });
 
         if (res.ok) {
@@ -221,7 +226,8 @@ async function concluirReserva(id) {
 async function carregarUsuariosAdmin() {
     try {
         const res = await fetch(`${API}/api/usuarios`, {
-            headers: getAuthHeaders()
+            headers: getAuthHeaders(),
+            credentials: 'same-origin'
         });
         const usuarios = await res.json();
         const container = document.getElementById('lista-usuarios');
@@ -232,7 +238,7 @@ async function carregarUsuariosAdmin() {
                 <p>Email: ${u.email}</p>
                 <p>Perfil: ${u.perfil}</p>
                 <p>Status: ${u.ativo ? 'Ativo' : 'Inativo'}</p>
-                <button onclick="alterarStatusUsuario(${u.id}, ${!u.ativo})">
+                <button class="btn-action secondary" onclick="alterarStatusUsuario(${u.id}, ${!u.ativo})">
                     ${u.ativo ? 'Inativar' : 'Ativar'}
                 </button>
             </div>
@@ -242,11 +248,13 @@ async function carregarUsuariosAdmin() {
     }
 }
 
+// Inativar/Ativar usuário
 async function alterarStatusUsuario(id, ativo) {
     try {
         const res = await fetch(`${API}/api/usuarios/${id}/status?ativo=${ativo}`, {
             method: 'PUT',
-            headers: getAuthHeaders()
+            headers: getAuthHeaders(),
+            credentials: 'same-origin'
         });
 
         if (res.ok) {
@@ -265,7 +273,8 @@ async function alterarStatusUsuario(id, ativo) {
 async function carregarAuditoriaAdmin() {
     try {
         const res = await fetch(`${API}/api/auditoria`, {
-            headers: getAuthHeaders()
+            headers: getAuthHeaders(),
+            credentials: 'same-origin'
         });
         const logs = await res.json();
         const container = document.getElementById('lista-auditoria');
@@ -284,5 +293,5 @@ async function carregarAuditoriaAdmin() {
     }
 }
 
-atualizarNavbar();
+atualizarResumo();
 carregarMesasAdmin();

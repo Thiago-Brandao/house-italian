@@ -4,146 +4,165 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>House Italian — Admin Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/admin.css">
-    <style>
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-.modal.hidden { display: none; }
-.modal-content {
-    background: white;
-    padding: 2rem;
-    border-radius: 8px;
-    max-width: 500px;
-    width: 90%;
-    position: relative;
-}
-.close-btn {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    font-size: 2rem;
-    cursor: pointer;
-}
-.tab-btn {
-    padding: 0.5rem 1rem;
-    margin: 0.5rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-.tab-btn.active {
-    background-color: #8B4513;
-    color: white;
-}
-.tab-content {
-    display: none;
-}
-.tab-content.active {
-    display: block;
-}
-</style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-
-<nav class="navbar">
-    <a href="/" class="navbar-brand">House-Italian (Admin)</a>
-    <div class="navbar-links">
-        <a href="/">Home</a>
-        <a href="/cardapio">Cardápio</a>
-        <span id="nav-usuario">
-            <span id="nav-nome"></span>
-            &nbsp;|&nbsp;
-            <a href="#" onclick="logout()">Sair</a>
-        </span>
-    </div>
-</nav>
-
-<div class="admin-dashboard-bg">
-    <div class="admin-container">
-        <h1>Painel Administrativo</h1>
-        
-        <div class="admin-tabs">
-            <button class="tab-btn active" onclick="mostrarTab('mesas')">Gerenciar Mesas</button>
-            <button class="tab-btn" onclick="mostrarTab('reservas')">Gerenciar Reservas</button>
-            <button class="tab-btn" onclick="mostrarTab('usuarios')">Gerenciar Usuários</button>
-            <button class="tab-btn" onclick="mostrarTab('auditoria')">Logs de Auditoria</button>
-        </div>
-
-        <!-- Tab: Mesas -->
-        <div id="tab-mesas" class="tab-content active">
-            <h2>Mesas</h2>
-            <button class="btn-adicionar" onclick="abrirModalMesa()">Adicionar Mesa</button>
-            <div id="lista-mesas">
-                <p>Carregando mesas...</p>
+    <nav class="navbar">
+        <a href="/" class="navbar-brand">
+            <i class="fas fa-utensils"></i>
+            House-Italian (Admin)
+        </a>
+        <div class="navbar-links">
+            <a href="/">Home</a>
+            <a href="/cardapio">Cardápio</a>
+            <a href="#" id="nav-action-link" onclick="irParaReserva()">Reserva</a>
+            <div class="navbar-user hidden" id="navbar-user-logged-out">
+                <a href="/login" class="btn-entrar">Entrar</a>
+            </div>
+            <div class="navbar-user" id="navbar-user-logged-in">
+                <a href="/perfil">
+                    <i class="far fa-user"></i>
+                    <span id="nav-nome"></span>
+                </a>
+                <a href="#" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Sair
+                </a>
             </div>
         </div>
+    </nav>
 
-        <!-- Tab: Reservas -->
-        <div id="tab-reservas" class="tab-content">
-            <h2>Reservas</h2>
-            <div id="lista-reservas-admin">
-                <p>Carregando reservas...</p>
-            </div>
+    <section class="admin-hero">
+        <div class="admin-hero-bg">
+            <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=1600" alt="Administração de restaurante">
         </div>
-
-        <!-- Tab: Usuários -->
-        <div id="tab-usuarios" class="tab-content">
-            <h2>Usuários</h2>
-            <div id="lista-usuarios">
-                <p>Carregando usuários...</p>
-            </div>
+        <div class="admin-hero-overlay"></div>
+        <div class="admin-hero-content">
+            <p class="section-subtitle">PAINEL</p>
+            <h2 class="section-title">Central administrativa do House-Italian</h2>
+            <p>Gerencie mesas, reservas, usuários e logs em um único lugar com estilo e clareza.</p>
         </div>
+    </section>
 
-        <!-- Tab: Auditoria -->
-        <div id="tab-auditoria" class="tab-content">
-            <h2>Logs de Auditoria</h2>
-            <div id="lista-auditoria">
-                <p>Carregando logs...</p>
+    <div class="page-bg">
+        <div class="page-container">
+            <div class="admin-summary">
+                <div class="summary-card">
+                    <span>Mesas</span>
+                    <strong id="summary-mesas">-</strong>
+                </div>
+                <div class="summary-card">
+                    <span>Reservas</span>
+                    <strong id="summary-reservas">-</strong>
+                </div>
+                <div class="summary-card">
+                    <span>Usuários</span>
+                    <strong id="summary-usuarios">-</strong>
+                </div>
+                <div class="summary-card">
+                    <span>Logs</span>
+                    <strong id="summary-logs">-</strong>
+                </div>
+            </div>
+            <h1 class="page-title">Painel Administrativo</h1>
+            
+            <div class="admin-tabs">
+                <button class="tab-btn active" onclick="mostrarTab('mesas')">Gerenciar Mesas</button>
+                <button class="tab-btn" onclick="mostrarTab('reservas')">Gerenciar Reservas</button>
+                <button class="tab-btn" onclick="mostrarTab('usuarios')">Gerenciar Usuários</button>
+                <button class="tab-btn" onclick="mostrarTab('auditoria')">Logs de Auditoria</button>
+            </div>
+
+            <!-- Tab: Mesas -->
+            <div id="tab-mesas" class="tab-content active">
+                <h2 style="color: #5c3018; margin-bottom: 1rem; font-family: 'Playfair Display', 'Inria Serif', serif;">Mesas</h2>
+                <button class="btn-form" style="width: auto; padding: 0.75rem 1.5rem;" onclick="abrirModalMesa()">Adicionar Mesa</button>
+                <div id="lista-mesas" style="margin-top: 1.5rem;">
+                    <p>Carregando mesas...</p>
+                </div>
+            </div>
+
+            <!-- Tab: Reservas -->
+            <div id="tab-reservas" class="tab-content">
+                <h2 style="color: #5c3018; margin-bottom: 1rem; font-family: 'Playfair Display', 'Inria Serif', serif;">Reservas</h2>
+                <div id="lista-reservas-admin">
+                    <p>Carregando reservas...</p>
+                </div>
+            </div>
+
+            <!-- Tab: Usuários -->
+            <div id="tab-usuarios" class="tab-content">
+                <h2 style="color: #5c3018; margin-bottom: 1rem; font-family: 'Playfair Display', 'Inria Serif', serif;">Usuários</h2>
+                <div id="lista-usuarios">
+                    <p>Carregando usuários...</p>
+                </div>
+            </div>
+
+            <!-- Tab: Auditoria -->
+            <div id="tab-auditoria" class="tab-content">
+                <h2 style="color: #5c3018; margin-bottom: 1rem; font-family: 'Playfair Display', 'Inria Serif', serif;">Logs de Auditoria</h2>
+                <div id="lista-auditoria">
+                    <p>Carregando logs...</p>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="page-footer">
-        Rua 7 Setor Comercial - Luziânia, GO &nbsp;·&nbsp; (55) 5555-5555
+    <!-- Modal para Adicionar/Editar Mesa -->
+    <div id="modal-mesa" class="modal hidden">
+        <div class="modal-content">
+            <button class="close-btn" onclick="fecharModalMesa()">&times;</button>
+            <h2 id="modal-titulo-mesa" style="color: #5c3018; margin-bottom: 1.5rem; font-family: 'Playfair Display', 'Inria Serif', serif;">Adicionar Mesa</h2>
+            <div class="form-group">
+                <label for="modal-mesa-numero">Número</label>
+                <input type="number" id="modal-mesa-numero">
+            </div>
+            <div class="form-group">
+                <label for="modal-mesa-capacidade">Capacidade</label>
+                <input type="number" id="modal-mesa-capacidade" min="1" max="20">
+            </div>
+            <div class="form-group">
+                <label for="modal-mesa-localizacao">Localização</label>
+                <input type="text" id="modal-mesa-localizacao">
+            </div>
+            <div class="form-group">
+                <label for="modal-mesa-descricao">Descrição</label>
+                <textarea id="modal-mesa-descricao" rows="3"></textarea>
+            </div>
+            <button class="btn-form" onclick="salvarMesa()">Salvar</button>
+        </div>
     </div>
-</div>
 
-<!-- Modal para Adicionar/Editar Mesa -->
-<div id="modal-mesa" class="modal hidden">
-    <div class="modal-content">
-        <span class="close-btn" onclick="fecharModalMesa()">&times;</span>
-        <h2 id="modal-titulo-mesa">Adicionar Mesa</h2>
-        <div class="form-group">
-            <label for="modal-mesa-numero">Número</label>
-            <input type="number" id="modal-mesa-numero">
+    <footer class="footer-main">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>House-Italian</h3>
+                    <p>Autêntica cozinha italiana em Luziânia. Tradição, sabor e elegância em cada prato.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Contato</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> Rua 7, Setor Comercial<br>Luziânia, GO</p>
+                    <p><i class="fas fa-phone"></i> (64) 3555-5555</p>
+                </div>
+  
+                <div class="footer-col">
+                    <h4>Navegação</h4>
+                    <a href="/">Home</a>
+                    <a href="/cardapio">Cardápio</a>
+                    <a href="#" onclick="irParaReserva()">Reservas</a>
+                    <a href="/perfil">Meu Perfil</a>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="modal-mesa-capacidade">Capacidade</label>
-            <input type="number" id="modal-mesa-capacidade" min="1" max="20">
+        <div class="footer-bottom">
+            <p>© 2026 House-Italian · IFG Campus Luziânia · Programação para Web</p>
         </div>
-        <div class="form-group">
-            <label for="modal-mesa-localizacao">Localização</label>
-            <input type="text" id="modal-mesa-localizacao">
-        </div>
-        <div class="form-group">
-            <label for="modal-mesa-descricao">Descrição</label>
-            <textarea id="modal-mesa-descricao" rows="3"></textarea>
-        </div>
-        <button class="btn-salvar" onclick="salvarMesa()">Salvar</button>
-    </div>
-</div>
+    </footer>
 
-<script src="/js/dashboard.js"></script>
-
+    <script src="/js/index.js"></script>
+    <script src="/js/dashboard.js"></script>
 </body>
 </html>

@@ -29,6 +29,11 @@ public class UsuarioController {
     // POST /api/usuarios — PÚBLICO (auto-cadastro)
     @POST
     public Response cadastrar(@Valid UsuarioCadastroDTO dto) {
+        if (dto == null) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(new MensagemErro("Corpo da requisição inválido."))
+                    .build();
+        }
         try {
             Usuario usuario = usuarioBO.cadastrar(
                     dto.nome(),

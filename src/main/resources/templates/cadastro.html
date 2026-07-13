@@ -4,63 +4,81 @@
     <meta charset="UTF-8">
     <title>Cadastro</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/loginScreamStyle.css">
 </head>
 <body>
-    <header>
-        <div class="header-container">
-            <div class="item1-content">
-                <p>House-Italian</p>
+    <nav class="navbar">
+        <a href="/" class="navbar-brand">
+            <i class="fas fa-utensils"></i>
+            House-Italian
+        </a>
+        <div class="navbar-links">
+            <a href="/">Home</a>
+            <a href="/cardapio">Cardápio</a>
+            <a href="#" id="nav-action-link" onclick="irParaReserva()">Reserva</a>
+            <div class="navbar-user" id="navbar-user-logged-out">
+                <a href="/login" class="btn-entrar">Entrar</a>
             </div>
-            <div class="item2-content">
-                <a href="/" style="text-decoration: none; color:white;">
-                    <p>Home</p>
+            <div class="navbar-user hidden" id="navbar-user-logged-in">
+                <a href="/perfil">
+                    <i class="far fa-user"></i>
+                    <span id="nav-nome"></span>
                 </a>
-            </div>
-            <div class="item3-content">
-                <a href="/cardapio" style="text-decoration: none; color:white;">
-                    <p>Cardápio</p>
+                <a href="#" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Sair
                 </a>
             </div>
         </div>
-    </header>
+    </nav>
 
     <main>
-        <div class="container-background">
-            <img src="/img/background-home.jpg" alt="background"/>
-        </div>
-
         <div class="container-main">
-            <div class="container-box-Login">
-                <div class="container-box2-login">
-                    <div class="container-box2-item1-content">
-                        <P>CADASTRO</P>
-                    </div>
-                    <div class="container-box2-item2-content">
-                        <p class="text-email"><b>NOME</b>:</p>
-                        <input type="text" id="input-nome" placeholder="Digite seu nome">
-
-                        <p class="text-email"><b>EMAIL</b>:</p>
-                        <input type="email" id="input-email" placeholder="Digite seu email">
-
-                        <p class="text-senha"><b>SENHA</b>:</p>
-                        <input type="password" id="input-senha" placeholder="Digite sua senha (mínimo 8 caracteres)">
-                        
-                        <div class="container-input-entrar">
-                            <input class="input-entrar" type="button" value="CADASTRAR"  
-                                   style="color: white; font-family: 'Inria Sans', sans-serif;" 
-                                   onclick="fazerCadastro()">
-                        </div>
-
-                        <p style="margin-top: 1rem;">
-                            Já tem conta? <a href="/login" style="color: #8B4513;">Faça login</a>
-                        </p>
-                    </div>
+            <section class="hero-panel">
+                <div class="hero-content">
+                    <span class="hero-tagline">Crie sua conta</span>
+                    <h1>Uma experiência italiana inesquecível</h1>
+                    <p>Comece sua jornada conosco e aproveite reservas, cardápio e atendimento exclusivo no House-Italian.</p>
                 </div>
-            </div>
+            </section>
+
+            <section class="form-panel">
+                <div class="form-box2-item1-content">
+                    <p>CRIAR CONTA</p>
+                </div>
+                <p class="form-subtitle">Complete seu cadastro para acessar o sistema.</p>
+                <form id="form-cadastro" onsubmit="event.preventDefault(); fazerCadastro();">
+                    <label for="input-nome">Nome Completo</label>
+                    <input type="text" id="input-nome" placeholder="Seu nome" required minlength="2">
+                    <span class="error-message" id="error-nome"></span>
+
+                    <label for="input-email">Email</label>
+                    <input type="email" id="input-email" placeholder="seu@email.com" required>
+                    <span class="error-message" id="error-email"></span>
+
+                    <label for="input-senha">Senha</label>
+                    <input type="password" id="input-senha" placeholder="Mínimo 8 caracteres" required minlength="8">
+                    <span class="error-message" id="error-senha"></span>
+
+                    <label for="input-confirmar-senha">Confirmar Senha</label>
+                    <input type="password" id="input-confirmar-senha" placeholder="Repita a senha" required minlength="8">
+                    <span class="error-message" id="error-confirmar-senha"></span>
+
+                    <span class="form-error-message" id="error-form"></span>
+
+                    <div class="container-input-entrar">
+                        <button class="input-entrar" type="submit" style="color: white; font-family: 'Inria Sans', sans-serif;">CRIAR CONTA</button>
+                    </div>
+                </form>
+
+                <p class="form-footer-text">Já tem conta? <a href="/login">Entrar</a></p>
+            </section>
         </div>
     </main>
 
     <script src="/js/cadastro.js"></script>
+    <script src="/js/index.js"></script>
 </body>
 </html>

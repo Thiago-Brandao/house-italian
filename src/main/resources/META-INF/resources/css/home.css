@@ -1,0 +1,257 @@
+/* Home Page Styles */
+
+/* Hero Section */
+.hero {
+    position: relative;
+    width: 100%;
+    height: 85vh;
+    overflow: hidden;
+}
+
+.hero-bg {
+    width: 100%;
+    height: 100%;
+}
+
+.hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(61, 31, 16, 0.65),
+        rgba(61, 31, 16, 0.8)
+    );
+}
+
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    z-index: 10;
+    width: 100%;
+    max-width: 900px;
+    padding: 0 2rem;
+}
+
+.hero-pretitle {
+    font-size: 1.3rem;
+    color: #c9a25a;
+    letter-spacing: 0.3em;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.hero-title {
+    font-family: 'Playfair Display', 'Inria Serif', serif;
+    font-size: 4.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 2.5rem;
+    opacity: 0.95;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+/* Features Section */
+.features {
+    background: #24201d;
+    padding: 4.5rem 0;
+    color: white;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+}
+
+.feature-item {
+    text-align: center;
+}
+
+.feature-icon {
+    font-size: 3rem;
+    color: #c9a25a;
+    margin-bottom: 1.2rem;
+}
+
+.feature-item h3 {
+    font-size: 1.6rem;
+    margin-bottom: 0.6rem;
+}
+
+.feature-item p {
+    font-size: 1.1rem;
+    color: #b8b3ac;
+}
+
+/* Destaques Section */
+.destaques {
+    padding: 5.5rem 0;
+    background: #faf7f2;
+}
+
+.section-pretitle {
+    font-size: 1.1rem;
+    color: #c9a25a;
+    letter-spacing: 0.3em;
+    margin-bottom: 0.8rem;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.destaques-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+}
+
+.destaque-card {
+    background: white;
+    border-radius: 0;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.destaque-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+}
+
+.destaque-img {
+    width: 100%;
+    height: 260px;
+}
+
+.destaque-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.destaque-content {
+    padding: 1.75rem;
+}
+
+.destaque-content h3 {
+    font-size: 1.7rem;
+    color: #24201d;
+    margin-bottom: 0.75rem;
+}
+
+.destaque-content p {
+    color: #777;
+    font-size: 1.05rem;
+    margin-bottom: 1.25rem;
+}
+
+.destaque-preco {
+    font-size: 1.8rem;
+    color: #5c3018;
+    font-weight: 700;
+    font-family: 'Playfair Display', 'Inria Serif', serif;
+}
+
+.btn-ver-cardapio {
+    display: inline-block;
+    margin: 3.5rem auto 0 auto;
+    padding: 1.1rem 3rem;
+    border: 2px solid #5c3018;
+    color: #5c3018;
+    font-size: 1.2rem;
+    font-weight: 600;
+    transition: all 0.3s;
+    background: transparent;
+}
+
+.btn-ver-cardapio:hover {
+    background: #5c3018;
+    color: white;
+}
+
+/* História Section */
+.historia {
+    padding: 5.5rem 0;
+    background: #faf7f2;
+}
+
+.historia-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.historia-content h2 {
+    text-align: left;
+    margin-bottom: 1.5rem;
+}
+
+.historia-content p {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 1.5rem;
+}
+
+.btn-historia {
+    margin-top: 1.25rem;
+}
+
+.historia-img {
+    width: 100%;
+    height: 450px;
+}
+
+.historia-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Responsive for Home Page */
+@media (max-width: 1024px) {
+    .destaques-grid,
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .historia-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .historia-img {
+        order: -1;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 3rem;
+    }
+    
+    .destaques-grid,
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+}

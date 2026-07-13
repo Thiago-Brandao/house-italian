@@ -27,4 +27,8 @@ public class Prato {
 
     @Column(nullable = false)
     private Boolean disponivel = true;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = true) // Temporarily nullable for existing data
+    private CategoriaPrato categoria;
 }
